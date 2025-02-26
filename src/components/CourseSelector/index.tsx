@@ -1,15 +1,13 @@
 import './example.css'
-import Counter from './Counter'
-import ModalToggle from './ModalToggle'
-import AssetSelector from './AssetSelector'
 import { FunctionComponent } from 'react'
 import { useFieldPlugin } from '@storyblok/field-plugin/react'
+import CourseSelector from './CourseSelector'
 
-const FieldPlugin: FunctionComponent = () => {
+const CourseSelectorPlugin: FunctionComponent = () => {
   const { type, data, actions } = useFieldPlugin({
     enablePortalModal: true,
     validateContent: (content: unknown) => ({
-      content: typeof content === 'number' ? content : 0,
+      content: typeof content === 'string' ? content : '',
     }),
   })
 
@@ -47,20 +45,15 @@ const FieldPlugin: FunctionComponent = () => {
         </button>
       )}
       <div className="container">
-        <Counter
-          count={data.content}
-          onIncrease={() => actions.setContent(data.content + 1)}
+        <CourseSelector
+          token={data.options.token}
+          getUserContext={actions.requestUserContext}
+          onSelect={actions.setContent}
+          selectedCourse={data.content}
         />
-        <hr />
-        <ModalToggle
-          isModalOpen={data.isModalOpen}
-          setModalOpen={actions.setModalOpen}
-        />
-        <hr />
-        <AssetSelector selectAsset={actions.selectAsset} />
       </div>
     </div>
   )
 }
 
-export default FieldPlugin
+export default CourseSelectorPlugin
