@@ -75,7 +75,6 @@ const CourseSelector: FunctionComponent<{
           ))}
         </Select>
       )}
-      <pre>{JSON.stringify(userContext, null, 2)}</pre>
     </div>
   )
 }
